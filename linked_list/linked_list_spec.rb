@@ -10,7 +10,7 @@ describe 'LinkedList' do
     end
   end
 
-  context 'Multiple Nodes' do
+  shared_context 'creating a linked list' do
     let(:node_3) { Node.new(3, nil) }
     let(:node_2) { Node.new(2, node_3) }
     let(:node_1) { Node.new(1, node_2) }
@@ -20,9 +20,14 @@ describe 'LinkedList' do
     it{ expect(node_1.next_node).to eq node_2 }
     it{ expect(node_2.next_node).to eq node_3 }
     it{ expect(node_3.next_node).to eq nil }
+  end
 
-    it 'reverses the list iteratively' do
-      reverse_list_iteratively!(node_0)
+  context 'Reverse list recursively' do
+    include_context 'creating a linked list'
+
+    it 'reverses the list recursively' do
+      reverse_list_recursively!(node_0, nil)
+
       expect(node_0.next_node).to eq nil
       expect(node_1.next_node).to eq node_0
       expect(node_2.next_node).to eq node_1
@@ -30,20 +35,11 @@ describe 'LinkedList' do
     end
   end
 
-  context 'Multiple Nodes' do
-    let(:node_3) { Node.new(3, nil) }
-    let(:node_2) { Node.new(2, node_3) }
-    let(:node_1) { Node.new(1, node_2) }
-    let(:node_0) { Node.new(0, node_1) }
+  context 'Reverse list iteratively' do
+    include_context 'creating a linked list'
 
-    it{ expect(node_0.next_node).to eq node_1 }
-    it{ expect(node_1.next_node).to eq node_2 }
-    it{ expect(node_2.next_node).to eq node_3 }
-    it{ expect(node_3.next_node).to eq nil }
-
-    it 'reverses the list recursively' do
-      reverse_list_recursively!(node_0, nil)
-
+    it 'reverses the list iteratively' do
+      reverse_list_iteratively!(node_0)
       expect(node_0.next_node).to eq nil
       expect(node_1.next_node).to eq node_0
       expect(node_2.next_node).to eq node_1
